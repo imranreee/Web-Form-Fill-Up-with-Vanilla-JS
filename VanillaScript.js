@@ -43,17 +43,64 @@ function fillAndSubmitForm() {
         document.querySelector('input[id="phone"]').value = randomPhone;
         document.querySelector('input[name="postCode"]').value = randomPostCode;
 
-        const dropdown = document.querySelector('select[name="options"]');
+        let dropdown = document.querySelector('select[name="buyerType"]');
         if (dropdown) {
             const options = dropdown.options;
-            const randomOption = Math.floor(Math.random() * options.length);
+            let randomOption = Math.floor(Math.random() * options.length);
+            if (randomOption === 0) {
+                randomOption = 1;
+            }
             dropdown.selectedIndex = randomOption;
         }
 
-        document.querySelectorAll('input[type="checkbox"][name="checkbox"]').forEach(checkbox => {
-            checkbox.checked = Math.random() > 0.5;
-        });
 
+        dropdown = document.querySelector('select[name="priceRange"]');
+        if (dropdown) {
+            const options = dropdown.options;
+            let randomOption = Math.floor(Math.random() * options.length);
+            if (randomOption === 0) {
+                randomOption = 1;
+            }
+            dropdown.selectedIndex = randomOption;
+        }
+
+        dropdown = document.querySelector('select[name="buyingDuration"]');
+        if (dropdown) {
+            const options = dropdown.options;
+            let randomOption = Math.floor(Math.random() * options.length);
+            if (randomOption === 0) {
+                randomOption = 1;
+            }
+            dropdown.selectedIndex = randomOption;
+        }
+
+        dropdown = document.querySelector('select[name="contactMethod"]');
+        if (dropdown) {
+            const options = dropdown.options;
+            let randomOption = Math.floor(Math.random() * options.length);
+            if (randomOption === 0) {
+                randomOption = 1;
+            }
+            dropdown.selectedIndex = randomOption;
+        }
+
+        dropdown = document.querySelector('select[name="selectPreApproval"]');
+        if (dropdown) {
+            const options = dropdown.options;
+            let randomOption = Math.floor(Math.random() * options.length);
+            if (randomOption === 0) {
+                randomOption = 1;
+            }
+            dropdown.selectedIndex = randomOption;
+        }
+
+        document.querySelector('input[type="checkbox"][name="scheduleInspection"]').click();
+        document.querySelector('input[type="checkbox"][name="priceInformation"]').click();
+        document.querySelector('input[type="checkbox"][name="requestFloorPlans"]').click();
+        document.querySelector('input[type="checkbox"][name="brochure"]').click();
+
+        document.querySelector('label.add-message-toggle.add-message-toggle-inactive').click();
+        document.querySelector('textarea[name="message"][formcontrolname="message"].mat-input-element').value = "Test"
 
         document.querySelector('textarea[name="message"]').value = `${myFirstName} functionality ${i + 1}`;
 
