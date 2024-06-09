@@ -11,12 +11,11 @@ function getRandomEmail() {
 }
 
 function getRandomPhoneNumber() {
-    const number = Math.floor(100000000 + Math.random() * 900000000).toString();
-    return `${number.substring(2)}`;
+    const randomSixDigits = Math.floor(100000 + Math.random() * 900000).toString();
+    return `222${randomSixDigits}`;
 }
 
 function getRandomPostCode() {
-    // Generate a random number between 1000 and 9999
     const postcode = Math.floor(1000 + Math.random() * 9000).toString();
     return postcode;
 }
@@ -25,23 +24,31 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Function to set the value of an input and trigger input and change events
+function setValueAndTriggerEvents(element, value) {
+    element.value = value;
+    const inputEvent = new Event('input', { bubbles: true });
+    const changeEvent = new Event('change', { bubbles: true });
+    element.dispatchEvent(inputEvent);
+    element.dispatchEvent(changeEvent);
+}
 
-function fillAndSubmitForm() {
-    const myFirstName = "IMRAN";
+async function fillAndSubmitForm() {
+    const myFirstName = "AL IMRAN";
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 20; i++) {
         document.querySelector('.minor-nav-buttons-first.no-second button.mat-flat-button').click();
 
-        sleep(1000);
+        await sleep(1000);
         const randomName = getRandomFullName();
         const randomEmail = getRandomEmail();
         const randomPhone = getRandomPhoneNumber();
         const randomPostCode = getRandomPostCode();
-        //console.log(randomName+" : "+randomPhone+" :"+randomEmail);
-        document.querySelector('input[name="name"]').value = randomName;
-        document.querySelector('input[formcontrolname="email"]').value = randomEmail;
-        document.querySelector('input[id="phone"]').value = randomPhone;
-        document.querySelector('input[name="postCode"]').value = randomPostCode;
+
+        setValueAndTriggerEvents(document.querySelector('input[name="name"]'), randomName);
+        setValueAndTriggerEvents(document.querySelector('input[formcontrolname="email"]'), randomEmail);
+        setValueAndTriggerEvents(document.querySelector('input[id="phone"]'), randomPhone);
+        setValueAndTriggerEvents(document.querySelector('input[name="postCode"]'), randomPostCode);
 
         let dropdown = document.querySelector('select[name="buyerType"]');
         if (dropdown) {
@@ -51,8 +58,8 @@ function fillAndSubmitForm() {
                 randomOption = 1;
             }
             dropdown.selectedIndex = randomOption;
+            setValueAndTriggerEvents(dropdown, dropdown.value);
         }
-
 
         dropdown = document.querySelector('select[name="priceRange"]');
         if (dropdown) {
@@ -62,6 +69,7 @@ function fillAndSubmitForm() {
                 randomOption = 1;
             }
             dropdown.selectedIndex = randomOption;
+            setValueAndTriggerEvents(dropdown, dropdown.value);
         }
 
         dropdown = document.querySelector('select[name="buyingDuration"]');
@@ -72,6 +80,7 @@ function fillAndSubmitForm() {
                 randomOption = 1;
             }
             dropdown.selectedIndex = randomOption;
+            setValueAndTriggerEvents(dropdown, dropdown.value);
         }
 
         dropdown = document.querySelector('select[name="contactMethod"]');
@@ -82,6 +91,7 @@ function fillAndSubmitForm() {
                 randomOption = 1;
             }
             dropdown.selectedIndex = randomOption;
+            setValueAndTriggerEvents(dropdown, dropdown.value);
         }
 
         dropdown = document.querySelector('select[name="selectPreApproval"]');
@@ -92,6 +102,7 @@ function fillAndSubmitForm() {
                 randomOption = 1;
             }
             dropdown.selectedIndex = randomOption;
+            setValueAndTriggerEvents(dropdown, dropdown.value);
         }
 
         document.querySelector('input[type="checkbox"][name="scheduleInspection"]').click();
@@ -100,11 +111,18 @@ function fillAndSubmitForm() {
         document.querySelector('input[type="checkbox"][name="brochure"]').click();
 
         document.querySelector('label.add-message-toggle.add-message-toggle-inactive').click();
-        document.querySelector('textarea[name="message"][formcontrolname="message"].mat-input-element').value = "Test"
+        setValueAndTriggerEvents(document.querySelector('textarea[name="message"][formcontrolname="message"].mat-input-element'), `${myFirstName} functionality ${i + 1}`);
 
-        document.querySelector('textarea[name="message"]').value = `${myFirstName} functionality ${i + 1}`;
+        const buttons = document.querySelectorAll('button[type="submit"]');
+        buttons.forEach(button => {
+            if (button.classList.contains('enquiry-submit')) {
+                button.click();
+            }
+        });
 
-        document.querySelector('button[type="submit"]').click();
+        await sleep(3000);
+
+        document.querySelector('button.sms-close').click();
     }
 }
 
